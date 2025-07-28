@@ -1,7 +1,7 @@
 'use server';
 
 import dbConnect from '@/lib/mongoose';
-import Job from '@/models/Job';
+import Job from '@/modals/Job';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 

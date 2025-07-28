@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/mongoose';
-import Job from '@/models/Job';
+import Job from '@/modals/Job';
 import StatsPage from '@/components/StatsPage';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

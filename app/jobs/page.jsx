@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import dbConnect from '@/lib/mongoose';
-import Job from '@/models/Job';
+import Job from '@/modals/Job';
 import JobsDashboard from '@/components/JobsDashboard';
 import { deleteJob } from './actions';
 import { logoutUser } from '@/app/logout/actions';

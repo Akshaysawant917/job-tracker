@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/mongoose';
-import Job from '@/models/Job';
+import Job from '@/modals/Job';
 import { updateJob } from '../../actions';
 import Link from 'next/link';
 import {

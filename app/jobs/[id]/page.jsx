@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import dbConnect from '@/lib/mongoose';
-import Job from '@/models/Job';
+import Job from '@/modals/Job';
 import JobDetails from '@/components/JobDetails';
 
 export default async function JobDetailsPage({ params }) {
