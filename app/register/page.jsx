@@ -18,25 +18,46 @@ export default function Register() {
   };
 
   return (
-    <div style={{ padding: 30 }}>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        /><br />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          type="password"
-        /><br />
-        <button type="submit" disabled={isPending}>
-          {isPending ? "Registering..." : "Register"}
-        </button>
-      </form>
-      <p>{msg}</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1f1c2c] to-[#928dab] px-4 py-12">
+      <div className="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl">
+        <h2 className="text-3xl font-bold text-white mb-6 text-center tracking-wide">
+          Register for Job Tracker
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder:text-white/70 focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder:text-white/70 focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+            required
+          />
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:opacity-90 transition-all duration-200 active:scale-95"
+          >
+            {isPending ? "Registering..." : "Register"}
+          </button>
+        </form>
+
+        {msg && (
+          <div className="mt-4 text-center text-sm text-white bg-green-600/20 border border-green-500 rounded-lg py-2 px-4">
+            {msg}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

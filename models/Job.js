@@ -16,6 +16,7 @@ const JobSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  userId: { type: String, required: true },
   salary: {
     type: String,
     default: ''

@@ -1,29 +1,29 @@
-"use server";
+'use server';
 
-import { connectToDb } from "@/lib/db";
-import User from "@/models/user";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import dbConnect from '@/lib/mongoose';
+import User from '@/models/User';
+import bcrypt from 'bcryptjs';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export async function loginUser({ email, password }) {
-  try {
-    await connectToDb();
+  await dbConnect();
 
-    const user = await User.findOne({ email });
-    if (!user) return { message: "User not found" };
+  const user = await User.findOne({ email: email.trim() }).select('+password userId');
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return { message: "Invalid credentials" };
-
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
-
-    return { token, message: "Login successful" };
-  } catch (error) {
-    console.error("Login error:", error);
-    return { message: "Server error" };
+  if (!user || !(await bcrypt.compare(password.trim(), user.password))) {
+    return { message: 'Invalid credentials' };
   }
+
+  // ✅ Store userId in a secure cookie
+ cookies().set('userId', user.userId, {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'lax',
+  path: '/',
+  maxAge: 60 * 60 * 24 * 7,
+});
+
+
+  redirect('/jobs');
 }

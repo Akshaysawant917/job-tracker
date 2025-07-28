@@ -16,9 +16,11 @@
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.528.0",
     "mongoose": "^8.16.4",
+    "nanoid": "^5.1.5",
     "next": "15.4.1",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

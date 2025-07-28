@@ -1,21 +1,21 @@
 'use server';
 
-import { connectToDb } from "@/lib/db";
-import User from "@/models/user";
+import dbConnect from '@/lib/mongoose';
+import User from '@/models/User';
+import { redirect } from 'next/navigation';
+import bcrypt from 'bcryptjs';
 
 export async function registerUser({ email, password }) {
-  try {
-    await connectToDb();
+  await dbConnect();
 
-    const userExists = await User.findOne({ email });
-    if (userExists) return "User already exists";
-
-    const newUser = new User({ email, password });
-    await newUser.save();
-
-    return "User registered successfully";
-  } catch (error) {
-    console.error("Registration error:", error);
-    return "Something went wrong, please try again";
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return 'User already exists';
   }
+
+await User.create({ email, password }); // let pre-save hook hash it
+
+
+  // ❗ Do not wrap redirect in try/catch
+  redirect('/login');
 }
