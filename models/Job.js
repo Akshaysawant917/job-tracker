@@ -46,11 +46,10 @@ const JobSchema = new mongoose.Schema({
   notes: {
     type: String,
     default: ''
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
   }
+},{
+  timestamps:true,
+  collection:"jobs"
 });
 
 export default mongoose.models.Job || mongoose.model('Job', JobSchema);

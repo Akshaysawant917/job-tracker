@@ -15,7 +15,9 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
   },
-  { timestamps: true }
+  { timestamps: true ,
+    collection:"users"
+  }
 );
 
 // Hash password before saving

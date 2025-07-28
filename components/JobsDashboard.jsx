@@ -1,12 +1,21 @@
 'use client';
-
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   Plus, Briefcase, MapPin, Clock, Pencil, Trash2, Filter, Search,
   BarChart3, Eye, Send, MessageSquare, X, Grid3X3, List, DollarSign, Calendar
 } from 'lucide-react';
 
-export default function JobsDashboard({ jobs, deleteJob }) {
+export default function JobsDashboard({ jobs, deleteJob, logoutUser }) {
+  const [statusFilter, setStatusFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+
+  const filteredJobs = jobs.filter(job => {
+    return (
+      (statusFilter ? job.status === statusFilter : true) &&
+      (typeFilter ? job.type === typeFilter : true)
+    );
+  });
   const getStatusColor = (status) => {
     const colors = {
       pending: 'bg-amber-50 text-amber-700 border-amber-200',
@@ -56,12 +65,20 @@ export default function JobsDashboard({ jobs, deleteJob }) {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <button
+                onClick={async () => await logoutUser()}
+                className="text-sm bg-red-500 text-white px-3 py-1 rounded-lg shadow-sm hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+
               <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
                 <Filter className="h-5 w-5" />
               </button>
-              <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+              <Link href="/stats" className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
                 <BarChart3 className="h-5 w-5" />
-              </button>
+              </Link>
+
               <Link href="/jobs/new" className="inline-flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-indigo-700 transition-colors font-medium">
                 <Plus className="h-4 w-4" />
                 <span>Add Job</span>
@@ -75,10 +92,10 @@ export default function JobsDashboard({ jobs, deleteJob }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           {[{ label: 'Total Jobs', count: stats.total, icon: Briefcase },
-            { label: 'Pending', count: stats.pending, icon: Clock, color: 'amber' },
-            { label: 'Applied', count: stats.applied, icon: Send, color: 'blue' },
-            { label: 'Interview', count: stats.interview, icon: MessageSquare, color: 'emerald' },
-            { label: 'Rejected', count: stats.rejected, icon: X, color: 'red' }
+          { label: 'Pending', count: stats.pending, icon: Clock, color: 'amber' },
+          { label: 'Applied', count: stats.applied, icon: Send, color: 'blue' },
+          { label: 'Interview', count: stats.interview, icon: MessageSquare, color: 'emerald' },
+          { label: 'Rejected', count: stats.rejected, icon: X, color: 'red' }
           ].map(({ label, count, icon: Icon, color = 'gray' }, idx) => (
             <div key={idx} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between">
@@ -93,7 +110,40 @@ export default function JobsDashboard({ jobs, deleteJob }) {
             </div>
           ))}
         </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+          <div className="flex space-x-4">
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            >
+              <option value="">All Statuses</option>
+              <option value="wishlist">Wishlist</option>
+              <option value="applied">Applied</option>
+              <option value="pending">Pending</option>
+              <option value="interview">Interview</option>
+              <option value="offer">Offer</option>
+              <option value="rejected">Rejected</option>
+              <option value="withdrawn">Withdrawn</option>
+            </select>
 
+            <select
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+              className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            >
+              <option value="">All Types</option>
+              <option value="full-time">Full-time</option>
+              <option value="part-time">Part-time</option>
+              <option value="contract">Contract</option>
+              <option value="internship">Internship</option>
+              <option value="freelance">Freelance</option>
+            </select>
+          </div>
+          <p className="text-sm text-gray-500">
+            Showing <strong>{filteredJobs.length}</strong> of <strong>{jobs.length}</strong> jobs
+          </p>
+        </div>
         {/* Job List */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200 flex justify-between">
@@ -125,7 +175,7 @@ export default function JobsDashboard({ jobs, deleteJob }) {
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
-              {jobs.map((job) => (
+              {filteredJobs.map((job) => (
                 <div key={job._id} className="p-6 hover:bg-gray-50 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
@@ -150,7 +200,7 @@ export default function JobsDashboard({ jobs, deleteJob }) {
                             {job.salary && (
                               <div className="flex items-center space-x-1">
                                 <DollarSign className="h-4 w-4" />
-                                <span>{job.salary}</span>
+                                <span>{job.salary} LPA</span>
                               </div>
                             )}
                             {job.applicationDate && (
