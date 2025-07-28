@@ -1,7 +1,7 @@
 'use server';
 
 import dbConnect from '@/lib/mongoose';
-import User from '../../models/User';
+import User from '../../models/User.js';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcryptjs';
 
