@@ -1,6 +1,6 @@
  🧠 Job Tracker App
 
-> 🎯 Live Demo: [https://job-tracker.vercel.app](https://job-tracker.vercel.app)  
+> 🎯 Live Demo: https://job-tracker-web.netlify.app/  
 > 🧪 Testing Credentials:  
 > 📧 Email: `test@gmail.com`  
 > 🔐 Password: `12345`
