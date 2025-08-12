@@ -25,5 +25,5 @@ export async function loginUser({ email, password }) {
 });
 
 
-  redirect('/jobs');
+  redirect('/dashboard');
 }

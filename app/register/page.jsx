@@ -5,6 +5,7 @@ import { registerUser } from "./actions";
 
 export default function Register() {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [isPending, startTransition] = useTransition();
@@ -12,7 +13,7 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     startTransition(async () => {
-      const message = await registerUser({ email, password });
+      const message = await registerUser({ name, email, password });
       setMsg(message);
     });
   };
@@ -25,6 +26,14 @@ export default function Register() {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder:text-white/70 focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+            required
+          />
           <input
             type="email"
             placeholder="Email"

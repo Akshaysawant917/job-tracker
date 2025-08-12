@@ -3,9 +3,9 @@ import { redirect } from 'next/navigation';
 
 import dbConnect from '@/lib/mongoose';
 import Job from '@/modals/Job';
-import JobsDashboard from '@/components/JobsDashboard';
-import { deleteJob } from './actions';
-import { logoutUser } from '@/app/logout/actions';
+import Dashboard from '@/components/Dashboard';
+import StatsPage from '@/components/StatsPage';
+
 
 export default async function JobsPage() {
   const cookieStore = await cookies();
@@ -21,7 +21,9 @@ export default async function JobsPage() {
   let jobs = await Job.find({ userId }).sort({ updatedAt: -1 }).lean()
   jobs = JSON.parse(JSON.stringify(jobs));
 
-  return (
-    <JobsDashboard jobs={jobs} deleteJob={deleteJob} logoutUser={logoutUser}/>
+  return (<>
+    <Dashboard jobs={jobs} />
+    <StatsPage jobs={jobs} />;
+    </>
   );
 }

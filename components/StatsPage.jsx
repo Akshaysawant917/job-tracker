@@ -45,7 +45,7 @@ export default function StatsPage({ jobs }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">📊 Application Stats</h1>
 
@@ -64,14 +64,14 @@ export default function StatsPage({ jobs }) {
         </div>
 
         {/* Summary */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+        {/* <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
           {statusCounts.map(({ status, count }) => (
             <div key={status} className="bg-white shadow-sm rounded-xl p-4 border border-gray-200">
               <p className="text-sm font-medium text-gray-500 capitalize">{status}</p>
               <p className="text-2xl font-bold text-gray-800">{count}</p>
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* Chart */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">

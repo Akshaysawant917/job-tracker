@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import {
-  Plus, Briefcase, MapPin, Clock, Pencil, Trash2, Filter, Search,
-  BarChart3, Eye, Send, MessageSquare, X, Grid3X3, List, DollarSign, Calendar
+  Plus, Briefcase, MapPin, Pencil, Trash2, Filter, Search,
+  BarChart3, Eye, X, Grid3X3, List, DollarSign, Calendar
 } from 'lucide-react';
 
 export default function JobsDashboard({ jobs, deleteJob, logoutUser }) {
@@ -33,15 +33,6 @@ export default function JobsDashboard({ jobs, deleteJob, logoutUser }) {
     return type === 'remote' ? '🏠' : type === 'hybrid' ? '🏢🏠' : '🏢';
   };
 
-  const stats = {
-    total: jobs.length,
-    pending: jobs.filter((job) => job.status === 'pending').length,
-    interview: jobs.filter((job) => job.status === 'interview').length,
-    rejected: jobs.filter((job) => job.status === 'rejected').length,
-    applied: jobs.filter((job) => job.status === 'applied').length,
-    offer: jobs.filter((job) => job.status === 'offer').length,
-    wishlist: jobs.filter((job) => job.status === 'wishlist').length,
-  };
 
   const handleDelete = (e) => {
     if (!confirm('Are you sure you want to delete this job?')) {
@@ -52,7 +43,7 @@ export default function JobsDashboard({ jobs, deleteJob, logoutUser }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
+      {/* <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
@@ -86,30 +77,10 @@ export default function JobsDashboard({ jobs, deleteJob, logoutUser }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Stats */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-          {[{ label: 'Total Jobs', count: stats.total, icon: Briefcase },
-          { label: 'Pending', count: stats.pending, icon: Clock, color: 'amber' },
-          { label: 'Applied', count: stats.applied, icon: Send, color: 'blue' },
-          { label: 'Interview', count: stats.interview, icon: MessageSquare, color: 'emerald' },
-          { label: 'Rejected', count: stats.rejected, icon: X, color: 'red' }
-          ].map(({ label, count, icon: Icon, color = 'gray' }, idx) => (
-            <div key={idx} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className={`text-sm font-medium text-${color}-600`}>{label}</p>
-                  <p className={`text-3xl font-bold text-${color}-900`}>{count}</p>
-                </div>
-                <div className={`p-3 bg-${color}-100 rounded-lg`}>
-                  <Icon className={`h-6 w-6 text-${color}-600`} />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
           <div className="flex space-x-4">
             <select

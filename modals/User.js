@@ -12,11 +12,17 @@ const UserSchema = new mongoose.Schema(
       default: () => nanoid(), // 👈 Generates 6-char ID like "a7x9c2"
       unique: true,
     },
+    name: {
+      type: String,
+      required: true,
+      trim: true
+    },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
   },
-  { timestamps: true ,
-    collection:"users"
+  {
+    timestamps: true,
+    collection: "users"
   }
 );
 
